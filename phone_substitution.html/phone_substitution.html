@@ -1,0 +1,32 @@
+<script type="text/javascript">
+
+// Все изменяемые номера телефонов должны быть исходно ссылками вида <a href="tel:xxxxxxxxxx">x (xxx) xxx-xx-xx</a>
+    
+var CPCPhone = '+7 (123) 456-78-90'; // Новый телефон видимый на сайте
+var CPCPhoneLink = '+71234567890'; // Новый телефон в атрибуте href после tel:
+    
+if ( window.location.search.substr(1).search("gclid") != -1 || window.location.search.substr(1).search("yclid") != -1 ) {
+  var d = new Date();
+  d.setTime(d.getTime() + (30*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();   
+  document.cookie = "CPCReferral=1;" + expires + ";path=/";
+}
+    
+if ( document.cookie.match(/^(.*;)?\s*CPCReferral\s*=\s*[^;]+(.*)?$/) != null ) {
+    function changePhoneNumber() {
+        var index;
+        var a = document.getElementsByTagName("a");
+    
+        for (index = 0; index < a.length; ++index) {
+            hrefLink = a[index].href;
+            hrefScheme = hrefLink.substring(0,4);               
+    
+            if (hrefScheme == "tel:") {
+                a[index].innerHTML= CPCPhone; 
+                a[index].href= "tel:" + CPCPhoneLink;
+            }
+        }
+    }
+    changePhoneNumber();     
+}
+</script>
